@@ -146,7 +146,7 @@ void exe_single(void){
 		case PUSH:
 			get_operand(1,count,operand_list);
 			sp -= 4;
-			if(sp <= stack-4){
+			if(sp <= stack-4 && sp >= stack+0x10000-4){
 				err_msg("sp out of range");
 			}
 
@@ -154,7 +154,7 @@ void exe_single(void){
 			break;
 		case POP:
 			get_operand(1,count,operand_list);
-			if(sp >= stack+0x10000-4){
+			if(sp <= stack-4 && sp >= stack+0x10000-4){
 				err_msg("sp out of range");
 			}
 			*operand_list[0] = *(int*)(sp);
@@ -238,9 +238,11 @@ void resolve_func(int count){
 	}
 	func_name[i] = 0;
 	pc++;
-	if(strcmp(func_name,"write")){
-		err_msg("only write supported :)");
+	/*
+	if(strcmp(func_name,"puts")){
+		err_msg("only puts supported :)");
 	}
+	*/
 	func_ptr = dlsym(RTLD_DEFAULT,(const char*)func_name);
 	if(!func_ptr){
 		err_msg(dlerror());
