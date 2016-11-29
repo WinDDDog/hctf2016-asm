@@ -267,14 +267,14 @@ void get_opcode(void){
 		line++;
 	}
 	for(j=0;j<total_size;j++){
-			printf("%c",*(result+j));
+		printf("%c",*(result+j));
 	}
 }
 
 
 int main(void){
-    printf("give me your code, end with a single line of '$'\n");
-    fflush(stdout);
+	printf("give me your code, end with a single line of '$'\n");
+	fflush(stdout);
 	get_opcode();
 	return 0;
 }
